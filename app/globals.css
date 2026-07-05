@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+/* --- Font del brand (stesso CDN del sito originale) --- */
+@font-face {
+  font-family: "SequelSansBlack";
+  src: url("https://assets.zyrosite.com/mxBZJw9GQ9fDakDz/Sequel%20Sans%20Black%20Body%20Regular.woff2")
+    format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SequelSansBook";
+  src: url("https://assets.zyrosite.com/mxBZJw9GQ9fDakDz/Sequel%20Sans%20Book%20Disp%20Regular.woff2")
+    format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg: #0c0c10;
+  --bg-2: #14141a;
+  --fg: #ffffff;
+  --muted: rgba(255, 255, 255, 0.62);
+  --accent: #85f71e; /* verde grime */
+  --yellow: #fffb00; /* giallo brand */
+}
+
+@theme inline {
+  --font-display: "SequelSansBlack", system-ui, sans-serif;
+  --font-body: "SequelSansBook", system-ui, sans-serif;
+  --color-bg: var(--bg);
+  --color-accent: var(--accent);
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+body {
+  font-family: "SequelSansBook", system-ui, -apple-system, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+}

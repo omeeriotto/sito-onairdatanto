@@ -1,0 +1,2 @@
+-- Seed intenzionalmente vuoto: questo progetto parte come template pulito.
+-- Aggiungere qui eventuali link iniziali specifici del nuovo sito.

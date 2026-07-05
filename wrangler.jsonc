@@ -1,0 +1,14 @@
+{
+  // Config minimale: il sito è deployato su Vercel, ma il database resta su
+  // Cloudflare D1. Questo file serve solo a gestire lo schema da CLI, es:
+  //   npx wrangler d1 execute onairdatanto-db --remote --file=./db/schema.sql
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "onairdatanto-db-admin",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "onairdatanto-db",
+      "database_id": "e69e069f-5f03-432a-bd91-d9849d7636ed"
+    }
+  ]
+}

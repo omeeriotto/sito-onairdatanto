@@ -87,28 +87,33 @@ const cases = [
     role: "Consulenza social media strategy - Marzo/Settembre 2025",
     text: "Un percorso di consulenza costruito attorno ad autenticità, TikTok-first approach, contenuti spontanei e integrazione cross-platform.",
     note: "Numeri relativi al periodo di consulenza.",
+    imageSrc: "/progetti/the-kollege.jpg",
+    imageAlt: "The Kollege",
     numbers: [
-      "Instagram: da 3.031 a 38.800 follower",
-      "TikTok: da 35.648 a 203.743 follower",
-      "Spotify: da 459 a 1.355 follower",
-      "Video TikTok oltre 10,6M views",
+      "Instagram: +1.180% follower",
+      "TikTok: +472% follower",
+      "Spotify: +195% follower",
+      "Video TikTok oltre 10M views",
     ],
   },
   {
     title: "Grime Spitterz",
     role: "Co-founder",
     text: "Un progetto nato dal basso e cresciuto attraverso community, contenuti social, live e identità musicale forte.",
+    imageSrc: "/progetti/grime-spitterz.jpg",
+    imageAlt: "Grime Spitterz",
     numbers: [
-      "Video Instagram oltre 300K views",
-      "Video Instagram oltre 500K views",
-      "40+ date in Italia negli ultimi 18 mesi",
-      "Live insieme a Black Sun Empire",
+      "Video social virali con oltre 500K views",
+      "Strategia social che ha portato 40+ live in 18 mesi",
+      "Apertura a Black Sun Empire",
     ],
   },
   {
     title: "Much Much Bass",
     role: "Co-founder e social media",
     text: "Label e progetto musicale dove seguo principalmente la parte social e comunicativa, lavorando sulla crescita del brand e sulla valorizzazione delle release.",
+    imageSrc: "/progetti/much-much-bass.jpg",
+    imageAlt: "Much Much Bass",
     numbers: [
       "1 release oltre 100K streaming complessivi",
       "1 release oltre 200K streaming complessivi",
@@ -119,16 +124,20 @@ const cases = [
     title: "Sissy Castrogiovanni",
     role: "Supporto consulenziale su progetto artistico",
     text: "Supporto alla comunicazione social di un progetto con forte identità artistica e potenziale internazionale.",
+    imageSrc: "/progetti/sissy-castrogiovanni.jpg",
+    imageAlt: "Sissy Castrogiovanni",
     numbers: [
-      "Video virale con l'Inno d'Italia",
-      "Performance al Blue Note di Pechino",
-      "Crescita di attenzione in Asia",
+      "Video virali sui social",
+      "Supporto per crescita in Asia",
+      "Strategia contenuti per identità artistica",
     ],
   },
   {
     title: "Arezzo Wave Contest",
     role: "Docente",
     text: "Lezione di 4 ore su Social Media Strategy e Marketing Digitale per artisti e band, con approccio pratico e casi reali.",
+    imageSrc: "/progetti/arezzo-wave.jpg",
+    imageAlt: "Arezzo Wave Contest",
     numbers: [
       "4 ore di formazione",
       "Focus su social strategy, contenuti e marketing musicale",
@@ -251,19 +260,21 @@ export default function Home() {
           </div>
 
           <div className="hero-visual" aria-label="Profilo e risultati rapidi">
-            <div className="hero-tag-cloud" aria-label="Competenze principali">
-              {heroTags.map((tag) => (
-                <span key={tag}>{tag}</span>
-              ))}
-            </div>
-            <div className="portrait-frame">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/media/adriano-story-profile.jpg"
-                alt="Adriano Carlucci"
-                width={720}
-                height={720}
-              />
+            <div className="hero-portrait-cluster">
+              <div className="hero-tag-cloud" aria-label="Competenze principali">
+                {heroTags.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
+              <div className="portrait-frame">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/media/adriano-story-profile.jpg"
+                  alt="Adriano Carlucci"
+                  width={720}
+                  height={720}
+                />
+              </div>
             </div>
             <div className="stat-grid">
               {heroStats.map((stat) => (

@@ -7,6 +7,8 @@ type CaseStudy = {
   role: string;
   text: string;
   note?: string;
+  imageSrc?: string;
+  imageAlt?: string;
   numbers: string[];
 };
 
@@ -38,8 +40,19 @@ export default function ProjectSlider({ cases }: ProjectSliderProps) {
     <div className="wrap project-slider" aria-label="Case study">
       <article className="project-panel" key={activeCase.title} aria-live="polite">
         <div className="project-media">
-          <strong>{activeCase.title}</strong>
-          <small>Foto progetto in arrivo</small>
+          {activeCase.imageSrc ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={activeCase.imageSrc}
+              alt={activeCase.imageAlt ?? activeCase.title}
+              width={900}
+              height={720}
+            />
+          ) : null}
+          <div className="project-media-caption">
+            <strong>{activeCase.title}</strong>
+            <small>{activeCase.role}</small>
+          </div>
         </div>
         <div className="project-info">
           <p className="case-role">{activeCase.role}</p>

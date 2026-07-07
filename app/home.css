@@ -1,7 +1,7 @@
 /* Landing personale Adriano Carlucci. */
 
 .home {
-  --gap: 108px;
+  --gap: 82px;
   --home-bg: #dfffa3;
   --paper: #f1ffd0;
   --paper-strong: #ebffb8;
@@ -28,9 +28,9 @@
 }
 
 .home .wrap {
-  max-width: 1120px;
+  width: min(calc(100% - 48px), 1120px);
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 24px;
 }
 
 .home-nav {
@@ -85,13 +85,13 @@
 }
 
 .hero {
-  padding: 104px 0 86px;
+  padding: 62px 0 58px;
 }
 
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
-  gap: 44px;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.78fr);
+  gap: 30px;
   align-items: center;
 }
 
@@ -100,10 +100,17 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  margin: 0 0 16px;
+  margin: 0 0 14px;
   color: var(--green-deep);
   font-size: 13px;
   text-transform: uppercase;
+}
+
+.hero .eyebrow {
+  padding: 8px 14px;
+  border: 1px solid rgba(17, 21, 13, 0.12);
+  border-radius: 999px;
+  background: rgba(241, 255, 208, 0.66);
 }
 
 .dot {
@@ -121,32 +128,32 @@
 }
 
 .hero h1 {
-  max-width: 780px;
+  max-width: 650px;
   margin: 0;
-  font-size: 72px;
-  line-height: 0.94;
+  font-size: clamp(58px, 5.8vw, 68px);
+  line-height: 0.9;
 }
 
 .lead {
-  max-width: 690px;
-  margin: 24px 0 0;
+  max-width: 650px;
+  margin: 20px 0 0;
   color: var(--ink-soft);
   font-size: 18px;
-  line-height: 1.6;
+  line-height: 1.54;
 }
 
 .cta-row {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 30px;
+  margin-top: 24px;
 }
 
 .hero-socials {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 18px;
+  margin-top: 14px;
 }
 
 .hero-socials a {
@@ -217,13 +224,17 @@
 }
 
 .hero-visual {
+  position: relative;
   display: grid;
-  gap: 18px;
+  gap: 14px;
   justify-items: center;
+  padding: 16px 0 0;
 }
 
 .portrait-frame {
-  width: min(100%, 430px);
+  position: relative;
+  z-index: 1;
+  width: min(100%, 360px);
   aspect-ratio: 1;
   padding: 10px;
   border-radius: 50%;
@@ -233,6 +244,15 @@
       border-box;
   border: 9px solid transparent;
   box-shadow: 0 24px 70px rgba(17, 21, 13, 0.22);
+}
+
+.portrait-frame::before {
+  content: "";
+  position: absolute;
+  inset: -28px;
+  z-index: -1;
+  border: 1px solid rgba(17, 21, 13, 0.12);
+  border-radius: inherit;
 }
 
 .portrait-frame img {
@@ -248,6 +268,53 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
+  width: min(100%, 390px);
+}
+
+.hero-tag-cloud {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-tag-cloud span {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 8px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--accent);
+  box-shadow: 0 16px 32px rgba(17, 21, 13, 0.18);
+  font-family: "SequelSansBook", system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.hero-tag-cloud span:nth-child(1) {
+  top: 10px;
+  left: 28px;
+}
+
+.hero-tag-cloud span:nth-child(2) {
+  top: 74px;
+  right: 2px;
+}
+
+.hero-tag-cloud span:nth-child(3) {
+  right: 18px;
+  bottom: 150px;
+}
+
+.hero-tag-cloud span:nth-child(4) {
+  left: 2px;
+  bottom: 174px;
 }
 
 .stat-card,
@@ -310,6 +377,10 @@
   padding: var(--gap) 0;
 }
 
+.split-section {
+  padding-bottom: 58px;
+}
+
 .split-grid,
 .contact-grid {
   display: grid;
@@ -368,7 +439,8 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
-  margin-top: 32px;
+  margin-top: 0;
+  padding-top: 40px;
 }
 
 .service-card {
@@ -430,7 +502,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  margin-top: 46px;
+  margin-top: 34px;
   padding: 22px;
   border: 1px solid rgba(17, 21, 13, 0.12);
   border-radius: 18px;
@@ -439,7 +511,7 @@
 }
 
 .home #servizi .service-note {
-  margin-block-start: 46px;
+  margin-block-start: 34px;
 }
 
 .service-note p {
@@ -599,7 +671,8 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
-  margin-top: 32px;
+  margin-top: 0;
+  padding-top: 40px;
 }
 
 .method-step {
@@ -617,11 +690,11 @@
 }
 
 .home .method-quote {
-  margin-top: 48px;
+  margin-top: 34px;
 }
 
 .home #metodo .method-quote {
-  margin-block-start: 48px;
+  margin-block-start: 34px;
 }
 
 .method-quote p {
@@ -641,7 +714,7 @@
 }
 
 .anti-box {
-  padding: 42px;
+  padding: 56px 42px 42px;
   background:
     linear-gradient(135deg, rgba(133, 247, 30, 0.46), transparent 48%),
     #f1ffd0;
@@ -812,7 +885,7 @@
 
 @media (max-width: 980px) {
   .home {
-    --gap: 72px;
+    --gap: 62px;
   }
 
   .home-nav .hide-md {
@@ -831,6 +904,24 @@
 
   .hero-visual {
     max-width: 620px;
+    justify-self: center;
+  }
+
+  .hero-tag-cloud {
+    position: static;
+    order: 2;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    max-width: 520px;
+  }
+
+  .hero-tag-cloud span {
+    position: static;
+    min-height: 34px;
+    padding: 7px 11px;
+    font-size: 11.5px;
   }
 
   .service-grid,
@@ -846,11 +937,11 @@
 
 @media (max-width: 720px) {
   .home {
-    --gap: 58px;
+    --gap: 48px;
   }
 
   .home .wrap {
-    padding: 0 18px;
+    width: min(calc(100% - 36px), 1120px);
   }
 
   .home-nav {
@@ -943,11 +1034,11 @@
 
 @media (max-width: 720px) {
   .home {
-    --gap: 38px;
+    --gap: 34px;
   }
 
   .home .wrap {
-    padding: 0 14px;
+    width: calc(100% - 28px);
   }
 
   .home-nav {
@@ -980,13 +1071,13 @@
   }
 
   .hero {
-    padding: 24px 0 28px;
+    padding: 18px 0 24px;
   }
 
   .hero-grid,
   .split-grid,
   .contact-grid {
-    gap: 22px;
+    gap: 18px;
   }
 
   .eyebrow,
@@ -1025,7 +1116,7 @@
 
   .cta-row {
     gap: 8px;
-    margin-top: 16px;
+    margin-top: 14px;
   }
 
   .btn-neo {
@@ -1057,8 +1148,13 @@
   }
 
   .hero-visual {
-    gap: 10px;
+    gap: 9px;
     justify-self: center;
+    padding-top: 2px;
+  }
+
+  .hero-tag-cloud {
+    display: none;
   }
 
   .portrait-frame {
@@ -1105,7 +1201,17 @@
   .service-grid,
   .method-grid {
     gap: 8px;
+    margin-top: 24px;
+  }
+
+  .role-grid {
     margin-top: 18px;
+  }
+
+  .service-grid,
+  .method-grid {
+    margin-top: 0;
+    padding-top: 24px;
   }
 
   .role-card {
@@ -1247,7 +1353,7 @@
   }
 
   .anti-box {
-    padding: 16px;
+    padding: 22px 16px 16px;
     border-radius: 14px;
     box-shadow: 0 14px 34px rgba(17, 21, 13, 0.08);
   }
@@ -1332,7 +1438,7 @@
   }
 
   .hero {
-    padding-top: 20px;
+    padding-top: 16px;
   }
 
   .lead {

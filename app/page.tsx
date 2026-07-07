@@ -31,6 +31,13 @@ const heroStats = [
   "Docente per Arezzo Wave Contest",
 ];
 
+const heroTags = [
+  "Strategia social",
+  "Marketing musicale",
+  "Formazione",
+  "Artist development",
+];
+
 const roles = [
   "Co-founder di Grime Spitterz",
   "Co-founder di Much Much Bass",
@@ -244,6 +251,11 @@ export default function Home() {
           </div>
 
           <div className="hero-visual" aria-label="Profilo e risultati rapidi">
+            <div className="hero-tag-cloud" aria-label="Competenze principali">
+              {heroTags.map((tag) => (
+                <span key={tag}>{tag}</span>
+              ))}
+            </div>
             <div className="portrait-frame">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -331,7 +343,7 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="wrap service-note" style={{ marginTop: 46 }}>
+        <div className="wrap service-note">
           <p>
             Lavoro con call singole, pacchetti da 10/20/30 ore e consulenze
             continuative da 3, 6 o 12 mesi. Prezzi e percorsi vengono definiti
@@ -384,7 +396,7 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="wrap method-quote" style={{ marginTop: 48 }}>
+        <div className="wrap method-quote">
           <p>
             La viralità può arrivare. Ma il punto non è inseguirla: è farsi
             trovare pronti quando succede.

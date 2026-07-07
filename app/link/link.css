@@ -98,7 +98,7 @@
   width: 100%;
   max-width: 620px;
   margin: 8px auto 28px;
-  padding: 10px 10px 0;
+  padding: 8px 8px 0;
   position: relative;
   overflow: hidden;
   background: linear-gradient(135deg, #fffde7 0%, var(--accent) 100%);
@@ -115,9 +115,9 @@
 }
 
 .lead-card-media {
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 7.2;
   overflow: hidden;
-  border-radius: 18px;
+  border-radius: 16px;
   background: #050507;
 }
 
@@ -126,7 +126,7 @@
   height: 100%;
   display: block;
   object-fit: cover;
-  object-position: center 42%;
+  object-position: center 36%;
 }
 
 .lead-card h2,
@@ -137,9 +137,9 @@
 }
 
 .lead-card h2 {
-  max-width: 500px;
+  max-width: 460px;
   margin: 0;
-  font-size: 22px;
+  font-size: 20px;
   line-height: 1.08;
   text-align: center;
 }
@@ -149,8 +149,8 @@
 }
 
 .lead-card-copy {
-  min-height: 94px;
-  padding: 18px 28px 22px;
+  min-height: 72px;
+  padding: 12px 22px 16px;
   display: grid;
   place-items: center;
   position: relative;
@@ -489,20 +489,21 @@
   .lead-card {
     max-width: 560px;
     border-radius: 26px;
-    padding: 10px 10px 0;
+    padding: 8px 8px 0;
   }
 
   .lead-card-media {
-    border-radius: 18px;
+    aspect-ratio: 16 / 7;
+    border-radius: 16px;
   }
 
   .lead-card-copy {
-    min-height: 104px;
-    padding: 18px 24px 24px;
+    min-height: 64px;
+    padding: 10px 18px 14px;
   }
 
   .lead-card h2 {
-    font-size: 21px;
+    font-size: 18px;
     line-height: 1.1;
   }
 
@@ -662,17 +663,17 @@
   }
 
   .lead-card-media {
-    aspect-ratio: 16 / 7.6;
+    aspect-ratio: 16 / 6.8;
     border-radius: 12px;
   }
 
   .lead-card-copy {
-    min-height: 64px;
-    padding: 10px 18px 12px;
+    min-height: 52px;
+    padding: 8px 14px 10px;
   }
 
   .lead-card h2 {
-    font-size: 17px;
+    font-size: 15.5px;
     line-height: 1.08;
   }
 
@@ -792,7 +793,7 @@
   }
 
   .lead-card h2 {
-    font-size: 15.5px;
+    font-size: 14.5px;
   }
 
   .image-wrapper {

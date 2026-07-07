@@ -36,10 +36,14 @@ export default function ProjectSlider({ cases }: ProjectSliderProps) {
     return null;
   }
 
+  const mediaClassName = `project-media project-media-${activeCase.title
+    .toLowerCase()
+    .replaceAll(" ", "-")}`;
+
   return (
     <div className="wrap project-slider" aria-label="Case study">
       <article className="project-panel" key={activeCase.title} aria-live="polite">
-        <div className="project-media">
+        <div className={mediaClassName}>
           {activeCase.imageSrc ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -49,10 +53,6 @@ export default function ProjectSlider({ cases }: ProjectSliderProps) {
               height={720}
             />
           ) : null}
-          <div className="project-media-caption">
-            <strong>{activeCase.title}</strong>
-            <small>{activeCase.role}</small>
-          </div>
         </div>
         <div className="project-info">
           <p className="case-role">{activeCase.role}</p>

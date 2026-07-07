@@ -311,18 +311,18 @@
 }
 
 .hero-tag-cloud span:nth-child(2) {
-  top: 74px;
-  right: 2px;
+  top: 78px;
+  right: -28px;
 }
 
 .hero-tag-cloud span:nth-child(3) {
-  right: 18px;
-  bottom: 150px;
+  right: -24px;
+  bottom: 148px;
 }
 
 .hero-tag-cloud span:nth-child(4) {
-  left: 2px;
-  bottom: 174px;
+  left: -30px;
+  bottom: 176px;
 }
 
 .stat-card,
@@ -617,8 +617,8 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(17, 21, 13, 0.12), rgba(17, 21, 13, 0.72)),
-    linear-gradient(120deg, rgba(133, 247, 30, 0.22), transparent 48%);
+    linear-gradient(180deg, rgba(17, 21, 13, 0.06), rgba(17, 21, 13, 0.24)),
+    linear-gradient(120deg, rgba(133, 247, 30, 0.08), transparent 48%);
   pointer-events: none;
 }
 
@@ -630,27 +630,8 @@
   object-position: center;
 }
 
-.project-media-caption {
-  position: absolute;
-  inset: auto 22px 22px;
-  z-index: 1;
-  display: grid;
-  gap: 8px;
-  color: #fffdf1;
-}
-
-.project-media strong {
-  max-width: 360px;
-  font-family: "SequelSansBlack", system-ui, sans-serif;
-  font-size: 40px;
-  line-height: 0.95;
-  text-transform: uppercase;
-}
-
-.project-media small {
-  color: rgba(255, 253, 241, 0.78);
-  font-size: 13px;
-  text-transform: uppercase;
+.project-media-grime-spitterz img {
+  object-position: center 28%;
 }
 
 .project-info {
@@ -1410,20 +1391,6 @@
     height: 178px;
     min-height: 0;
     border-radius: 12px;
-  }
-
-  .project-media-caption {
-    inset: auto 14px 14px;
-    gap: 5px;
-  }
-
-  .project-media strong {
-    font-size: 24px;
-  }
-
-  .project-media small {
-    font-size: 10px;
-    line-height: 1.2;
   }
 
   .project-info {

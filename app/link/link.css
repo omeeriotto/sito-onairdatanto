@@ -150,36 +150,10 @@
 
 .lead-card-copy {
   min-height: 94px;
-  padding: 18px 52px 22px;
+  padding: 18px 28px 22px;
   display: grid;
   place-items: center;
   position: relative;
-}
-
-.lead-card-icon,
-.lead-card-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #050507;
-  font-family: Arial, Helvetica, sans-serif;
-  line-height: 1;
-}
-
-.lead-card-icon {
-  left: 18px;
-  font-size: 26px;
-  font-weight: 900;
-}
-
-.lead-card-arrow {
-  right: 16px;
-  font-size: 36px;
-  transition: transform 0.2s ease;
-}
-
-.lead-card:hover .lead-card-arrow {
-  transform: translate(5px, -50%);
 }
 
 .lead-eyebrow {
@@ -524,22 +498,12 @@
 
   .lead-card-copy {
     min-height: 104px;
-    padding: 18px 42px 24px;
+    padding: 18px 24px 24px;
   }
 
   .lead-card h2 {
     font-size: 21px;
     line-height: 1.1;
-  }
-
-  .lead-card-icon {
-    left: 16px;
-    font-size: 24px;
-  }
-
-  .lead-card-arrow {
-    right: 14px;
-    font-size: 34px;
   }
 
   .lead-modal {
@@ -704,22 +668,12 @@
 
   .lead-card-copy {
     min-height: 64px;
-    padding: 10px 32px 12px;
+    padding: 10px 18px 12px;
   }
 
   .lead-card h2 {
     font-size: 17px;
     line-height: 1.08;
-  }
-
-  .lead-card-icon {
-    left: 12px;
-    font-size: 19px;
-  }
-
-  .lead-card-arrow {
-    right: 11px;
-    font-size: 25px;
   }
 
   #links-container {

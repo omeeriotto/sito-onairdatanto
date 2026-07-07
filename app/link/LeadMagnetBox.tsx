@@ -61,14 +61,8 @@ export default function LeadMagnetBox() {
           />
         </div>
         <div className="lead-card-copy">
-          <span className="lead-card-icon" aria-hidden="true">
-            ↗
-          </span>
           <p className="lead-eyebrow">Guida gratuita</p>
           <h2>{INSTAGRAM_GUIDE_TITLE}</h2>
-          <span className="lead-card-arrow" aria-hidden="true">
-            →
-          </span>
         </div>
         <button
           className="lead-card-button"

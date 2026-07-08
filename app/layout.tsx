@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PrivacyConsent from "./PrivacyConsent";
 import "./globals.css";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://onairdatanto.it";
@@ -84,6 +85,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         {children}
+        <PrivacyConsent />
       </body>
     </html>
   );

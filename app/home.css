@@ -842,6 +842,15 @@
   accent-color: var(--accent);
 }
 
+.privacy-check a {
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.privacy-check a:hover {
+  color: var(--green-deep);
+}
+
 .form-submit {
   width: 100%;
 }

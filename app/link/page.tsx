@@ -145,6 +145,7 @@ export default async function LinksPage() {
 
       <footer className="links-footer">
         <Link href="/">← Torna alla home</Link>
+        <Link href="/privacy-policy">Privacy Policy</Link>
       </footer>
 
       <RevealOnScroll />

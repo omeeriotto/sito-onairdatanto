@@ -475,6 +475,7 @@ export default function Home() {
               HAT
             </a>
             <a href={`mailto:${EMAIL}`}>Email</a>
+            <a href="/privacy-policy">Privacy Policy</a>
           </div>
         </div>
       </footer>

@@ -89,7 +89,11 @@ export default function ContactForm({ email }: { email: string }) {
       </label>
       <label className="privacy-check">
         <input name="privacy" type="checkbox" required />
-        <span>Confermo di voler essere ricontattato per questa richiesta.</span>
+        <span>
+          Ho letto la <a href="/privacy-policy">Privacy Policy</a> e autorizzo
+          l&apos;uso dei dati inseriti per essere ricontattato in merito alla
+          mia richiesta.
+        </span>
       </label>
       <button className="btn-neo solid form-submit" type="submit">
         Invia richiesta

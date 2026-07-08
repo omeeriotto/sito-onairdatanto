@@ -54,7 +54,7 @@ const jsonLd = {
   url: SITE_URL,
   image: `${SITE_URL}/media/adriano-story-profile.jpg`,
   jobTitle: "Consulente Social e Digital Marketing per artistə e band",
-  email: "adriano.carlucci28@gmail.com",
+  email: "info@adrianocarlucci.it",
   description: DESCRIPTION,
   knowsAbout: [
     "Social media strategy per artisti",

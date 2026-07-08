@@ -40,7 +40,7 @@ ADMIN_USERNAME=...
 ADMIN_PASSWORD=...              # cambiala
 RESEND_API_KEY=...              # token Resend server-side
 RESEND_FROM_EMAIL=...           # es: Adriano Carlucci <info@adrianocarlucci.it>
-RESEND_REPLY_TO_EMAIL=adriano.carlucci28@gmail.com
+RESEND_REPLY_TO_EMAIL=info@adrianocarlucci.it
 LEAD_MAGNET_PHOTO_URL=...       # opzionale, URL pubblico foto nella mail
 ```
 

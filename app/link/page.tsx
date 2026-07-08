@@ -73,7 +73,7 @@ export default async function LinksPage() {
             </svg>
           </a>
           <a
-            href="mailto:adriano.carlucci28@gmail.com"
+            href="mailto:info@adrianocarlucci.it"
             aria-label="Email"
           >
             <svg viewBox="0 0 32 32">

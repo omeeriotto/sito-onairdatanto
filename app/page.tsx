@@ -2,12 +2,12 @@ import ContactForm from "./ContactForm";
 import ProjectSlider from "./ProjectSlider";
 import "./home.css";
 
-const EMAIL = "adriano.carlucci28@gmail.com";
+const EMAIL = "info@adrianocarlucci.it";
 const INSTAGRAM = "https://www.instagram.com/onairda.tanto/";
 const LINKEDIN = "https://www.linkedin.com/in/adriano-carlucci-aa800a140/";
 const HAT = "https://hatmusic.it/profile/@omega.r-2au9uuk6";
 const CALL_HREF =
-  "mailto:adriano.carlucci28@gmail.com?subject=Call%20gratuita%20-%20progetto%20musicale";
+  "mailto:info@adrianocarlucci.it?subject=Call%20gratuita%20-%20progetto%20musicale";
 
 const keywords = [
   "Strategia Social",

@@ -8,7 +8,7 @@ quella va ignorata, mentre questi dati restano il riferimento.
 
 - Nome brand principale: Adriano Carlucci
 - Definizione: Consulente Social e Digital Marketing per artistə e band
-- Email: adriano.carlucci28@gmail.com
+- Email: info@adrianocarlucci.it
 - Instagram: @onairda.tanto
 - LinkedIn: https://www.linkedin.com/in/adriano-carlucci-aa800a140/
 

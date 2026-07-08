@@ -28,8 +28,8 @@ export default function PrivacyPolicyPage() {
           <p>
             Il titolare del trattamento è Adriano Carlucci. Per qualsiasi
             richiesta relativa alla privacy puoi scrivere a{" "}
-            <a href="mailto:adriano.carlucci28@gmail.com">
-              adriano.carlucci28@gmail.com
+            <a href="mailto:info@adrianocarlucci.it">
+              info@adrianocarlucci.it
             </a>
             .
           </p>
@@ -93,8 +93,8 @@ export default function PrivacyPolicyPage() {
           <p>
             Puoi chiedere accesso, rettifica, cancellazione, limitazione e
             opposizione al trattamento dei dati scrivendo a{" "}
-            <a href="mailto:adriano.carlucci28@gmail.com">
-              adriano.carlucci28@gmail.com
+            <a href="mailto:info@adrianocarlucci.it">
+              info@adrianocarlucci.it
             </a>
             .
           </p>

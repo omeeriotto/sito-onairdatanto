@@ -13,4 +13,4 @@ export const resendFrom =
   "Adriano Carlucci <info@adrianocarlucci.it>";
 
 export const resendReplyTo =
-  process.env.RESEND_REPLY_TO_EMAIL || "adriano.carlucci28@gmail.com";
+  process.env.RESEND_REPLY_TO_EMAIL || "info@adrianocarlucci.it";

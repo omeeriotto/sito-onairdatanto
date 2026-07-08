@@ -801,6 +801,14 @@
   text-transform: uppercase;
 }
 
+.form-honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 .contact-form input,
 .contact-form select,
 .contact-form textarea {
@@ -823,6 +831,13 @@
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(133, 247, 30, 0.16);
+}
+
+.captcha-field span {
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: none;
 }
 
 .privacy-check {

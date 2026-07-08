@@ -2,7 +2,7 @@
 
 import { FormEvent, useState } from "react";
 
-type FormStatus = "idle" | "success" | "error";
+type FormStatus = "idle" | "success" | "error" | "captcha";
 
 export default function ContactForm({ email }: { email: string }) {
   const [status, setStatus] = useState<FormStatus>("idle");
@@ -17,9 +17,21 @@ export default function ContactForm({ email }: { email: string }) {
     const need = String(data.get("need") || "").trim();
     const message = String(data.get("message") || "").trim();
     const privacy = data.get("privacy");
+    const captcha = String(data.get("captcha") || "").trim();
+    const website = String(data.get("website") || "").trim();
 
-    if (!name || !sender || !project || !need || !message || !privacy) {
+    if (website) {
+      setStatus("captcha");
+      return;
+    }
+
+    if (!name || !sender || !project || !need || !message || !privacy || !captcha) {
       setStatus("error");
+      return;
+    }
+
+    if (captcha !== "8") {
+      setStatus("captcha");
       return;
     }
 
@@ -46,6 +58,10 @@ export default function ContactForm({ email }: { email: string }) {
 
   return (
     <form className="contact-form" onSubmit={handleSubmit}>
+      <label className="form-honeypot" aria-hidden="true">
+        Sito web
+        <input name="website" type="text" tabIndex={-1} autoComplete="off" />
+      </label>
       <label>
         Nome e cognome
         <input name="name" type="text" autoComplete="name" required />
@@ -87,12 +103,23 @@ export default function ContactForm({ email }: { email: string }) {
         Messaggio
         <textarea name="message" rows={5} required />
       </label>
+      <label className="captcha-field">
+        Verifica anti-spam
+        <span>Quanto fa 5 + 3?</span>
+        <input
+          name="captcha"
+          type="text"
+          inputMode="numeric"
+          autoComplete="off"
+          placeholder="Risposta"
+          required
+        />
+      </label>
       <label className="privacy-check">
         <input name="privacy" type="checkbox" required />
         <span>
-          Ho letto la <a href="/privacy-policy">Privacy Policy</a> e autorizzo
-          l&apos;uso dei dati inseriti per essere ricontattato in merito alla
-          mia richiesta.
+          Ho letto la <a href="/privacy-policy">Privacy Policy</a>. Autorizzo
+          il ricontatto per questa richiesta.
         </span>
       </label>
       <button className="btn-neo solid form-submit" type="submit">
@@ -106,6 +133,11 @@ export default function ContactForm({ email }: { email: string }) {
       {status === "error" ? (
         <p className="form-message error">
           Qualcosa non ha funzionato. Puoi scrivermi direttamente a {email}.
+        </p>
+      ) : null}
+      {status === "captcha" ? (
+        <p className="form-message error">
+          Verifica anti-spam non superata. Controlla la risposta e riprova.
         </p>
       ) : null}
     </form>

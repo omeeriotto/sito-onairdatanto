@@ -61,14 +61,21 @@ export async function listAllLinks(): Promise<Link[]> {
 
 /** Link dashboard: link normali + guida gratuita come elemento gestibile. */
 export async function listAllAdminLinks(): Promise<AdminLinkItem[]> {
-  const rows = await d1Query<LinkRow>(
-    `SELECT * FROM links ORDER BY sort_order ASC, id ASC`
-  );
-  const stats = await getLinkStatsMap("link");
-  const regular = rows.map((row) =>
-    toAdminLink(row, stats.get(String(row.id)) ?? { clickCount: 0, downloadCount: 0 })
-  );
   const leadMagnet = await getLeadMagnetAdminItem();
+  let regular: AdminLinkItem[] = [];
+
+  try {
+    const rows = await d1Query<LinkRow>(
+      `SELECT * FROM links ORDER BY sort_order ASC, id ASC`
+    );
+    const stats = await getLinkStatsMap("link");
+    regular = rows.map((row) =>
+      toAdminLink(row, stats.get(String(row.id)) ?? { clickCount: 0, downloadCount: 0 })
+    );
+  } catch {
+    regular = [];
+  }
+
   return [...regular, leadMagnet].sort(
     (a, b) => a.sortOrder - b.sortOrder || a.id.localeCompare(b.id)
   );

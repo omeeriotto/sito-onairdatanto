@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Sortable from "sortablejs";
 import type { AdminLinkItem } from "@/lib/types";
@@ -20,9 +20,29 @@ export default function LinkAdminList({
 
   const listRef = useRef<HTMLDivElement>(null);
   const linksRef = useRef(links);
-  linksRef.current = links;
+
+  useEffect(() => {
+    linksRef.current = links;
+  }, [links]);
 
   // Inizializza SortableJS (ri-creato a ogni remount della lista).
+  const flash = useCallback((type: "ok" | "err", text: string) => {
+    setMsg({ type, text });
+    window.setTimeout(() => setMsg(null), 2600);
+  }, []);
+
+  const persistOrder = useCallback(
+    async (ids: string[]) => {
+      const res = await fetch("/api/admin/links/reorder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ids }),
+      });
+      if (!res.ok) flash("err", "Errore nel salvataggio dell'ordine");
+    },
+    [flash]
+  );
+
   useEffect(() => {
     const el = listRef.current;
     if (!el) return;
@@ -45,21 +65,7 @@ export default function LinkAdminList({
       },
     });
     return () => sortable.destroy();
-  }, [renderKey]);
-
-  function flash(type: "ok" | "err", text: string) {
-    setMsg({ type, text });
-    window.setTimeout(() => setMsg(null), 2600);
-  }
-
-  async function persistOrder(ids: string[]) {
-    const res = await fetch("/api/admin/links/reorder", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ids }),
-    });
-    if (!res.ok) flash("err", "Errore nel salvataggio dell'ordine");
-  }
+  }, [persistOrder, renderKey]);
 
   function move(index: number, dir: -1 | 1) {
     const target = index + dir;

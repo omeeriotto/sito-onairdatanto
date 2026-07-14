@@ -28,7 +28,6 @@ export default function LeadMagnetBox({
   content?: LeadMagnetLinkContent;
 }) {
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [state, setState] = useState<SubmitState>("idle");
   const [message, setMessage] = useState("");
@@ -48,7 +47,7 @@ export default function LeadMagnetBox({
     const res = await fetch("/api/lead-magnet", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email }),
+      body: JSON.stringify({ email }),
     });
 
     const data = (await res.json().catch(() => null)) as {
@@ -66,7 +65,6 @@ export default function LeadMagnetBox({
 
     setState("success");
     setMessage("Perfetto: controlla la tua casella email, la guida è partita.");
-    setName("");
     setEmail("");
   }
 
@@ -123,18 +121,7 @@ export default function LeadMagnetBox({
               <p>{content.modalText}</p>
               <form className="lead-form" onSubmit={handleSubmit}>
                 <label>
-                  Il tuo nome
-                  <input
-                    type="text"
-                    autoComplete="name"
-                    required
-                    value={name}
-                    onChange={(event) => setName(event.target.value)}
-                    placeholder="Nome"
-                  />
-                </label>
-                <label>
-                  La tua email
+                  Inserisci la tua email
                   <input
                     type="email"
                     inputMode="email"

@@ -1,4 +1,6 @@
 import { d1Query, d1Run } from "./d1";
+import { INSTAGRAM_GUIDE_TITLE } from "./instagramGuideEmail";
+import { getResendClient } from "./resend";
 import { syncLeadMagnetContact } from "./resendContacts";
 
 const SOURCE = "instagram-profile-guide";
@@ -40,6 +42,61 @@ async function ensureSubscribersTable(): Promise<void> {
   ).catch(() => undefined);
   await d1Run(`ALTER TABLE email_subscribers ADD COLUMN resend_error TEXT`).catch(
     () => undefined
+  );
+}
+
+function resendStatusError(status: unknown): string | null {
+  const value = String(status ?? "");
+  if (["bounced", "failed", "suppressed", "complained", "canceled"].includes(value)) {
+    return `Resend: ${value}`;
+  }
+  return null;
+}
+
+async function listResendGuideSubscribers(): Promise<LeadMagnetSubscriber[]> {
+  try {
+    const resend = getResendClient();
+    const response = await resend.emails.list({ limit: 100 });
+    const emails = response.data?.data ?? [];
+
+    return emails
+      .filter((email) => email.subject === INSTAGRAM_GUIDE_TITLE)
+      .flatMap((email, index) =>
+        email.to.map((recipient, recipientIndex) => ({
+          id: -1 * (index + 1) * 100 - recipientIndex,
+          name: null,
+          email: recipient.toLowerCase(),
+          source: "instagram-profile-guide",
+          resend_contact_id: email.id,
+          resend_synced_at: email.created_at,
+          resend_error: resendStatusError(email.last_event),
+          created_at: email.created_at,
+          updated_at: email.created_at,
+        }))
+      );
+  } catch {
+    return [];
+  }
+}
+
+function mergeSubscribers(
+  databaseRows: LeadMagnetSubscriber[],
+  resendRows: LeadMagnetSubscriber[]
+): LeadMagnetSubscriber[] {
+  const seen = new Set<string>();
+  const merged: LeadMagnetSubscriber[] = [];
+
+  for (const row of [...databaseRows, ...resendRows]) {
+    const key = row.email.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    merged.push(row);
+  }
+
+  return merged.sort(
+    (a, b) =>
+      new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime() ||
+      b.id - a.id
   );
 }
 
@@ -89,11 +146,17 @@ export async function saveLeadMagnetSubscriber(
 export async function listLeadMagnetSubscribers(): Promise<
   LeadMagnetSubscriber[]
 > {
-  await ensureSubscribersTable();
-  return d1Query<LeadMagnetSubscriber>(
-    `SELECT id, name, email, source, resend_contact_id, resend_synced_at,
-            resend_error, created_at, updated_at
-       FROM email_subscribers
-      ORDER BY updated_at DESC, id DESC`
-  );
+  const resendRows = await listResendGuideSubscribers();
+  try {
+    await ensureSubscribersTable();
+    const databaseRows = await d1Query<LeadMagnetSubscriber>(
+      `SELECT id, name, email, source, resend_contact_id, resend_synced_at,
+              resend_error, created_at, updated_at
+         FROM email_subscribers
+        ORDER BY updated_at DESC, id DESC`
+    );
+    return mergeSubscribers(databaseRows, resendRows);
+  } catch {
+    return resendRows;
+  }
 }

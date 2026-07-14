@@ -51,9 +51,11 @@ async function getGuideImage(request: Request) {
 
 export async function POST(request: Request) {
   const payload = (await request.json().catch(() => null)) as {
+    name?: string;
     email?: string;
   } | null;
 
+  const name = payload?.name?.trim() ?? "";
   const email = payload?.email?.trim().toLowerCase() ?? "";
 
   if (!EMAIL_RE.test(email)) {
@@ -63,7 +65,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const stored = await saveLeadMagnetSubscriber(email);
+  const stored = await saveLeadMagnetSubscriber(email, name);
 
   try {
     const resend = getResendClient();

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
   const router = useRouter();
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState("info@adrianocarlucci.it");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -37,17 +37,17 @@ export default function LoginForm() {
   return (
     <form className="login-card" onSubmit={onSubmit}>
       <h1 className="lc-brand">
-        OMEGA <b>RIOT</b>
+        Adriano <b>Carlucci</b>
       </h1>
       <p className="lc-sub">Pannello di amministrazione</p>
 
       {error && <div className="notice notice-err">{error}</div>}
 
       <div className="field">
-        <label htmlFor="u">Username</label>
+        <label htmlFor="u">Email</label>
         <input
           id="u"
-          type="text"
+          type="email"
           autoComplete="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}

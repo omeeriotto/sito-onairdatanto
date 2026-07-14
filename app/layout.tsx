@@ -5,7 +5,7 @@ import "./globals.css";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://onairdatanto.it";
 
 const DESCRIPTION =
-  "Consulenze social, strategie marketing musicali e formazione per artisti, band, label e realtà musicali. Prenota una call gratuita.";
+  "Consulenze social, strategie di marketing musicale e formazione per artisti, band, label e realtà musicali. Prenota una call gratuita.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -39,11 +39,20 @@ export const metadata: Metadata = {
     url: SITE_URL,
     title: "Adriano Carlucci | Consulente Social e Digital Marketing per artisti e band",
     description: DESCRIPTION,
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Adriano Carlucci - Social e Digital Marketing per artisti, band e label",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Adriano Carlucci | Consulente Social e Digital Marketing",
     description: DESCRIPTION,
+    images: ["/twitter-image"],
   },
 };
 

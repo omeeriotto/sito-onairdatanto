@@ -22,11 +22,21 @@ CREATE INDEX IF NOT EXISTS idx_links_visible ON links (visible);
 
 CREATE TABLE IF NOT EXISTS email_subscribers (
   id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  name        TEXT,
   email       TEXT    NOT NULL UNIQUE,
   source      TEXT    NOT NULL DEFAULT 'instagram-profile-guide',
+  resend_contact_id TEXT,
+  resend_synced_at  TEXT,
+  resend_error      TEXT,
   created_at  TEXT    NOT NULL DEFAULT (datetime('now')),
   updated_at  TEXT    NOT NULL DEFAULT (datetime('now'))
 );
 
 CREATE INDEX IF NOT EXISTS idx_email_subscribers_source
   ON email_subscribers (source);
+
+CREATE TABLE IF NOT EXISTS site_content (
+  key        TEXT PRIMARY KEY,
+  value      TEXT NOT NULL,
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);

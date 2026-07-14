@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 
 type CaseStudy = {
   title: string;
-  role: string;
-  text: string;
+  role?: string;
+  text?: string;
   note?: string;
   imageSrc?: string;
   imageAlt?: string;
-  numbers: string[];
+  numbers?: string[];
 };
 
 type ProjectSliderProps = {
@@ -55,11 +55,11 @@ export default function ProjectSlider({ cases }: ProjectSliderProps) {
           ) : null}
         </div>
         <div className="project-info">
-          <p className="case-role">{activeCase.role}</p>
+          {activeCase.role ? <p className="case-role">{activeCase.role}</p> : null}
           <h3>{activeCase.title}</h3>
-          <p>{activeCase.text}</p>
+          {activeCase.text ? <p>{activeCase.text}</p> : null}
           <ul>
-            {activeCase.numbers.map((number) => (
+            {(activeCase.numbers ?? []).map((number) => (
               <li key={number}>{number}</li>
             ))}
           </ul>

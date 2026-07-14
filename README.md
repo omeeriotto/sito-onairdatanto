@@ -39,6 +39,7 @@ SESSION_SECRET=...              # random, firma la sessione
 ADMIN_USERNAME=...
 ADMIN_PASSWORD=...              # cambiala
 RESEND_API_KEY=...              # token Resend server-side
+RESEND_LEAD_MAGNET_SEGMENT_ID=... # opzionale, segmento Resend per la guida
 RESEND_FROM_EMAIL=...           # es: Adriano Carlucci <info@adrianocarlucci.it>
 RESEND_REPLY_TO_EMAIL=info@adrianocarlucci.it
 LEAD_MAGNET_PHOTO_URL=...       # opzionale, URL pubblico foto nella mail
@@ -73,8 +74,9 @@ npx wrangler d1 execute onairdatanto-db --remote --command="SELECT * FROM links"
 ## Lead magnet Instagram
 
 Il box in alto su `/link` apre una modale fullscreen con una mini landing e un
-libretto creato in CSS. L'iscrizione chiama `/api/lead-magnet`, salva l'email su
-D1 quando disponibile e invia subito la guida tramite Resend.
+libretto creato in CSS. L'iscrizione chiama `/api/lead-magnet`, salva nome/email
+su D1, sincronizza il contatto su Resend e invia subito la guida. Se imposti
+`RESEND_LEAD_MAGNET_SEGMENT_ID`, il contatto viene aggiunto anche a quel segmento.
 
 Il testo editoriale della guida è in `content/instagram-profile-guide.md`.
 La foto viene inviata come immagine inline allegata alla mail. In alternativa si

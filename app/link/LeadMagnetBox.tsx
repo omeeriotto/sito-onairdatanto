@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import type { LeadMagnetLinkContent } from "@/lib/leadMagnetLink";
 import {
   INSTAGRAM_GUIDE_IMAGE_PATH,
@@ -94,61 +95,64 @@ export default function LeadMagnetBox({
         </button>
       </section>
 
-      {open ? (
-        <div className="lead-modal" role="dialog" aria-modal="true">
-          <button
-            className="lead-modal-close"
-            type="button"
-            aria-label="Chiudi"
-            onClick={() => setOpen(false)}
-          >
-            ×
-          </button>
-          <div className="lead-modal-inner">
-            <div className="lead-book" aria-hidden="true">
-              <div className="book-shadow" />
-              <div className="book-cover">
-                <span>Guida gratuita</span>
-                <strong>7 consigli Instagram</strong>
-                <small>per artisti, band e progetti musicali</small>
-              </div>
-              <div className="book-pages" />
-            </div>
-
-            <div className="lead-modal-copy">
-              <p className="lead-eyebrow">Gratis via email</p>
-              <h2>{content.title}</h2>
-              <p>{content.modalText}</p>
-              <form className="lead-form" onSubmit={handleSubmit}>
-                <label>
-                  Inserisci la tua email
-                  <input
-                    type="email"
-                    inputMode="email"
-                    autoComplete="email"
-                    required
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                    placeholder="nome@email.it"
-                  />
-                </label>
-                <button type="submit" disabled={state === "loading"}>
-                  {state === "loading" ? "Invio in corso..." : content.cta}
+      {open
+        ? createPortal(
+            <div className="lead-modal" role="dialog" aria-modal="true">
+              <div className="lead-modal-inner">
+                <button
+                  className="lead-modal-close"
+                  type="button"
+                  aria-label="Chiudi"
+                  onClick={() => setOpen(false)}
+                >
+                  ×
                 </button>
-              </form>
-              {message ? (
-                <p className={`lead-message ${state === "error" ? "is-error" : ""}`}>
-                  {message}
-                </p>
-              ) : null}
-              <small>
-                Userò questa mail solo per inviarti consigli pratici su social e
-                digital marketing musicale. Niente spam.
-              </small>
-            </div>
-          </div>
-        </div>
-      ) : null}
+                <div className="lead-book" aria-hidden="true">
+                  <div className="book-shadow" />
+                  <div className="book-cover">
+                    <span>Guida gratuita</span>
+                    <strong>7 consigli Instagram</strong>
+                    <small>per artisti, band e progetti musicali</small>
+                  </div>
+                  <div className="book-pages" />
+                </div>
+
+                <div className="lead-modal-copy">
+                  <p className="lead-eyebrow">Gratis via email</p>
+                  <h2>{content.title}</h2>
+                  <p>{content.modalText}</p>
+                  <form className="lead-form" onSubmit={handleSubmit}>
+                    <label>
+                      Inserisci la tua email
+                      <input
+                        type="email"
+                        inputMode="email"
+                        autoComplete="email"
+                        required
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
+                        placeholder="nome@email.it"
+                      />
+                    </label>
+                    <button type="submit" disabled={state === "loading"}>
+                      {state === "loading" ? "Invio in corso..." : content.cta}
+                    </button>
+                  </form>
+                  {message ? (
+                    <p className={`lead-message ${state === "error" ? "is-error" : ""}`}>
+                      {message}
+                    </p>
+                  ) : null}
+                  <small>
+                    Userò questa mail solo per inviarti consigli pratici su social e
+                    digital marketing musicale. Niente spam.
+                  </small>
+                </div>
+              </div>
+            </div>,
+            document.body
+          )
+        : null}
     </>
   );
 }

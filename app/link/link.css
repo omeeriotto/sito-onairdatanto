@@ -212,18 +212,19 @@
   z-index: 100;
   min-height: 100dvh;
   overflow-y: auto;
-  background:
-    radial-gradient(900px 460px at 78% 5%, rgba(133, 247, 30, 0.16), transparent 60%),
-    #050507;
+  display: grid;
+  place-items: center;
+  background: rgba(5, 5, 7, 0.72);
+  backdrop-filter: blur(10px);
   padding: 28px;
   color: #fff;
 }
 
 .lead-modal-close {
-  position: fixed;
+  position: absolute;
   top: 18px;
   right: 18px;
-  z-index: 2;
+  z-index: 3;
   width: 44px;
   height: 44px;
   border: 1px solid rgba(255, 255, 255, 0.22);
@@ -235,29 +236,37 @@
 }
 
 .lead-modal-inner {
-  min-height: calc(100dvh - 56px);
-  max-width: 1040px;
-  margin: 0 auto;
+  position: relative;
+  width: min(960px, calc(100vw - 56px));
+  max-height: calc(100dvh - 56px);
+  overflow: auto;
+  padding: 42px;
   display: grid;
-  grid-template-columns: minmax(250px, 0.78fr) minmax(0, 1.22fr);
-  gap: 44px;
+  grid-template-columns: minmax(260px, 0.86fr) minmax(0, 1.14fr);
+  gap: 38px;
   align-items: center;
+  background:
+    radial-gradient(720px 420px at 18% 18%, rgba(133, 247, 30, 0.15), transparent 56%),
+    linear-gradient(145deg, rgba(20, 20, 28, 0.98), #050507);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 24px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.62);
 }
 
 .lead-modal-copy h2 {
-  max-width: 620px;
+  max-width: 520px;
   margin: 0;
-  font-size: clamp(34px, 5vw, 54px);
+  font-size: clamp(32px, 4vw, 46px);
   line-height: 1;
   overflow-wrap: anywhere;
 }
 
 .lead-modal-copy p {
-  max-width: 620px;
+  max-width: 520px;
   margin: 18px 0 0;
   color: rgba(255, 255, 255, 0.76);
-  font-size: 17px;
-  line-height: 1.62;
+  font-size: 16px;
+  line-height: 1.55;
 }
 
 .lead-modal-copy small {
@@ -270,7 +279,7 @@
 
 .lead-book {
   position: relative;
-  min-height: 420px;
+  min-height: 360px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -290,7 +299,7 @@
 .book-cover {
   position: relative;
   z-index: 1;
-  width: min(270px, 76vw);
+  width: min(245px, 76vw);
   aspect-ratio: 0.72;
   padding: 28px 24px;
   display: flex;
@@ -317,14 +326,14 @@
 
 .book-cover strong {
   font-family: "SequelSansBlack", Arial, sans-serif;
-  font-size: 34px;
+  font-size: 31px;
   line-height: 0.95;
   text-transform: uppercase;
 }
 
 .book-pages {
   position: absolute;
-  width: min(254px, calc(76vw - 16px));
+  width: min(231px, calc(76vw - 16px));
   aspect-ratio: 0.72;
   background:
     repeating-linear-gradient(
@@ -514,6 +523,9 @@
   }
 
   .lead-modal-inner {
+    width: min(560px, calc(100vw - 32px));
+    max-height: calc(100dvh - 44px);
+    padding: 28px 20px 22px;
     grid-template-columns: 1fr;
     gap: 18px;
   }
@@ -744,8 +756,11 @@
   }
 
   .lead-modal-inner {
-    min-height: calc(100dvh - 28px);
+    width: calc(100vw - 20px);
+    max-height: calc(100dvh - 28px);
+    padding: 24px 16px 18px;
     gap: 12px;
+    border-radius: 18px;
   }
 
   .lead-book {

@@ -101,8 +101,8 @@
   padding: 8px 8px 0;
   position: relative;
   overflow: hidden;
-  background: rgba(255, 253, 241, 0.94);
-  border: 1px solid rgba(17, 21, 13, 0.12);
+  background: linear-gradient(135deg, #fffde7 0%, var(--accent) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 26px;
   color: #050507;
   box-shadow:
@@ -432,6 +432,12 @@
   box-shadow:
     0 22px 52px rgba(17, 21, 13, 0.14),
     0 1px 0 rgba(255, 255, 255, 0.58) inset;
+}
+
+.lead-card-frame {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 .fade-up.active {
   opacity: 1;

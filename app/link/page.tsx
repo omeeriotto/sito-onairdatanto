@@ -110,7 +110,7 @@ export default async function LinksPage() {
           {items.map((item) => {
             if (item.kind === "lead-magnet") {
               return (
-                <div className="fade-up" key="lead-magnet">
+                <div className="fade-up lead-card-frame" key="lead-magnet">
                   <LeadMagnetBox content={item.leadMagnet} />
                 </div>
               );

@@ -90,6 +90,7 @@ export async function POST(request: Request) {
     }
 
     await recordLinkEvent("lead-magnet", LEAD_MAGNET_ID, "download");
+    await recordLinkEvent("lead-magnet", LEAD_MAGNET_ID, "send");
     return Response.json({ ok: true, id: data?.id, stored });
   } catch (error) {
     return Response.json(

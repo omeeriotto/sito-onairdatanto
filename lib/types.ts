@@ -32,6 +32,7 @@ export interface Link {
 export interface LinkStats {
   clickCount: number;
   downloadCount: number;
+  sendCount?: number;
 }
 
 export interface AdminLinkItem {
@@ -47,4 +48,5 @@ export interface AdminLinkItem {
   sortOrder: number;
   clickCount: number;
   downloadCount: number;
+  sendCount?: number;
 }

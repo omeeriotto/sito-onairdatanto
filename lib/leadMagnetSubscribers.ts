@@ -53,7 +53,15 @@ function resendStatusError(status: unknown): string | null {
   return null;
 }
 
-async function listResendGuideSubscribers(): Promise<LeadMagnetSubscriber[]> {
+function propertyString(value: unknown): string {
+  if (typeof value === "string") return value;
+  if (value && typeof value === "object" && "value" in value) {
+    return String((value as { value?: unknown }).value ?? "");
+  }
+  return "";
+}
+
+export async function listResendGuideSubscribers(): Promise<LeadMagnetSubscriber[]> {
   try {
     const resend = getResendClient();
     const response = await resend.emails.list({ limit: 100 });
@@ -77,6 +85,58 @@ async function listResendGuideSubscribers(): Promise<LeadMagnetSubscriber[]> {
   } catch {
     return [];
   }
+}
+
+async function listResendGuideContacts(): Promise<LeadMagnetSubscriber[]> {
+  try {
+    const resend = getResendClient();
+    const segmentId = process.env.RESEND_LEAD_MAGNET_SEGMENT_ID?.trim();
+    const response = await resend.contacts.list({
+      limit: 100,
+      ...(segmentId ? { segmentId } : {}),
+    });
+    const contacts = response.data?.data ?? [];
+    const detailed = await Promise.all(
+      contacts.map(async (contact) => {
+        const detail = await resend.contacts.get({ email: contact.email }).catch(() => null);
+        return { contact, detail: detail?.data ?? null };
+      })
+    );
+
+    return detailed
+      .filter(({ detail }) => {
+        if (segmentId) return true;
+        const properties = detail?.properties ?? {};
+        return (
+          propertyString(properties.lead_magnet) === SOURCE ||
+          propertyString(properties.last_downloaded_guide) === SOURCE
+        );
+      })
+      .map(({ contact, detail }, index) => ({
+        id: -10000 - index,
+        name: [contact.first_name, contact.last_name].filter(Boolean).join(" ") || null,
+        email: contact.email.toLowerCase(),
+        source: SOURCE,
+        resend_contact_id: contact.id,
+        resend_synced_at: contact.created_at,
+        resend_error: null,
+        created_at: detail?.created_at ?? contact.created_at,
+        updated_at: detail?.created_at ?? contact.created_at,
+      }));
+  } catch {
+    return [];
+  }
+}
+
+async function listResendGuideRows(): Promise<LeadMagnetSubscriber[]> {
+  return mergeSubscribers(
+    await listResendGuideSubscribers(),
+    await listResendGuideContacts()
+  );
+}
+
+export async function countResendGuideSends(): Promise<number> {
+  return (await listResendGuideRows()).length;
 }
 
 function mergeSubscribers(
@@ -105,6 +165,8 @@ export async function saveLeadMagnetSubscriber(
   name = "",
   source = SOURCE
 ): Promise<boolean> {
+  const resendSync = await syncLeadMagnetContact({ name, email, source });
+
   try {
     await ensureSubscribersTable();
 
@@ -121,7 +183,6 @@ export async function saveLeadMagnetSubscriber(
       [name.trim() || null, email, source]
     );
 
-    const resendSync = await syncLeadMagnetContact({ name, email, source });
     await d1Run(
       `UPDATE email_subscribers
           SET resend_contact_id = COALESCE(?, resend_contact_id),
@@ -146,7 +207,7 @@ export async function saveLeadMagnetSubscriber(
 export async function listLeadMagnetSubscribers(): Promise<
   LeadMagnetSubscriber[]
 > {
-  const resendRows = await listResendGuideSubscribers();
+  const resendRows = await listResendGuideRows();
   try {
     await ensureSubscribersTable();
     const databaseRows = await d1Query<LeadMagnetSubscriber>(

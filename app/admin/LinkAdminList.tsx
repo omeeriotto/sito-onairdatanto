@@ -210,7 +210,7 @@ export default function LinkAdminList({
                 <p className="row-stats">
                   {link.clickCount} click
                   {link.kind === "lead-magnet"
-                    ? ` · ${link.downloadCount} download`
+                    ? ` · ${link.downloadCount} download · ${link.sendCount ?? 0} invii`
                     : ""}
                 </p>
               </div>

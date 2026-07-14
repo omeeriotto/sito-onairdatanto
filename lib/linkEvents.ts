@@ -20,7 +20,7 @@ async function ensureLinkEventsTable(): Promise<void> {
 export async function recordLinkEvent(
   itemType: "link" | "lead-magnet",
   itemId: string,
-  event: "click" | "download"
+  event: "click" | "download" | "send"
 ): Promise<void> {
   try {
     await ensureLinkEventsTable();
@@ -39,10 +39,11 @@ export async function getLinkStats(
 ): Promise<LinkStats> {
   try {
     await ensureLinkEventsTable();
-    const row = await d1First<{ clicks: number; downloads: number }>(
+    const row = await d1First<{ clicks: number; downloads: number; sends: number }>(
       `SELECT
          SUM(CASE WHEN event = 'click' THEN 1 ELSE 0 END) AS clicks,
-         SUM(CASE WHEN event = 'download' THEN 1 ELSE 0 END) AS downloads
+         SUM(CASE WHEN event = 'download' THEN 1 ELSE 0 END) AS downloads,
+         SUM(CASE WHEN event = 'send' THEN 1 ELSE 0 END) AS sends
        FROM link_events
        WHERE item_type = ? AND item_id = ?`,
       [itemType, itemId]
@@ -50,6 +51,7 @@ export async function getLinkStats(
     return {
       clickCount: Number(row?.clicks ?? 0),
       downloadCount: Number(row?.downloads ?? 0),
+      sendCount: Number(row?.sends ?? 0),
     };
   } catch {
     return { clickCount: 0, downloadCount: 0 };
@@ -65,10 +67,12 @@ export async function getLinkStatsMap(
       item_id: string;
       clicks: number;
       downloads: number;
+      sends: number;
     }>(
       `SELECT item_id,
               SUM(CASE WHEN event = 'click' THEN 1 ELSE 0 END) AS clicks,
-              SUM(CASE WHEN event = 'download' THEN 1 ELSE 0 END) AS downloads
+              SUM(CASE WHEN event = 'download' THEN 1 ELSE 0 END) AS downloads,
+              SUM(CASE WHEN event = 'send' THEN 1 ELSE 0 END) AS sends
          FROM link_events
         WHERE item_type = ?
         GROUP BY item_id`,
@@ -80,6 +84,7 @@ export async function getLinkStatsMap(
         {
           clickCount: Number(row.clicks ?? 0),
           downloadCount: Number(row.downloads ?? 0),
+          sendCount: Number(row.sends ?? 0),
         },
       ])
     );

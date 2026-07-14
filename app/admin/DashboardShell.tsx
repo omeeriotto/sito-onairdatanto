@@ -18,6 +18,10 @@ export default function DashboardShell({
 }) {
   const [tab, setTab] = useState<"links" | "home" | "downloads">("links");
   const visibleLinks = useMemo(() => links.filter((link) => link.visible).length, [links]);
+  const totalSends = useMemo(
+    () => links.reduce((total, link) => total + (link.sendCount ?? 0), 0),
+    [links]
+  );
 
   return (
     <div className="admin-wrap dashboard-wrap">
@@ -30,6 +34,7 @@ export default function DashboardShell({
           <span><b>{links.length}</b> link</span>
           <span><b>{visibleLinks}</b> visibili</span>
           <span><b>{subscribers.length}</b> download</span>
+          <span><b>{totalSends}</b> invii</span>
         </div>
       </div>
 
@@ -69,7 +74,9 @@ export default function DashboardShell({
             <div>
               <h2>Download guide</h2>
               <p>Nome, email, guida scaricata e data ultimo download.</p>
-              <p className="panel-note">La sync Resend avviene quando viene inviata la guida.</p>
+              <p className="panel-note">
+                La lista usa i download salvati nel sito e, quando disponibile, gli invii letti da Resend.
+              </p>
             </div>
             <a className="btn btn-primary" href="/api/admin/subscribers/export">
               Scarica CSV

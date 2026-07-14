@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import LinkAdminList from "./LinkAdminList";
 import HomeEditor from "./HomeEditor";
-import type { Link as LinkType } from "@/lib/types";
+import type { AdminLinkItem } from "@/lib/types";
 import type { HomeContent } from "@/lib/homeContent";
 import type { LeadMagnetSubscriber } from "@/lib/leadMagnetSubscribers";
 
@@ -12,7 +12,7 @@ export default function DashboardShell({
   homeContent,
   subscribers,
 }: {
-  links: LinkType[];
+  links: AdminLinkItem[];
   homeContent: HomeContent;
   subscribers: LeadMagnetSubscriber[];
 }) {

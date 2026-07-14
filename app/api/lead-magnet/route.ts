@@ -7,7 +7,9 @@ import {
   renderInstagramGuideText,
 } from "@/lib/instagramGuideEmail";
 import { INSTAGRAM_GUIDE_IMAGE_PATH } from "@/lib/leadMagnetContent";
+import { LEAD_MAGNET_ID } from "@/lib/leadMagnetLink";
 import { saveLeadMagnetSubscriber } from "@/lib/leadMagnetSubscribers";
+import { recordLinkEvent } from "@/lib/linkEvents";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -87,6 +89,7 @@ export async function POST(request: Request) {
       );
     }
 
+    await recordLinkEvent("lead-magnet", LEAD_MAGNET_ID, "download");
     return Response.json({ ok: true, id: data?.id, stored });
   } catch (error) {
     return Response.json(

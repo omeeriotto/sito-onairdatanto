@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { listPublicLinks } from "@/lib/links";
+import { getLeadMagnetLinkContent } from "@/lib/leadMagnetLink";
 import { detectPlatform } from "@/lib/platforms";
 import PlatformIcon from "@/components/PlatformIcon";
 import LeadMagnetBox from "./LeadMagnetBox";
@@ -38,7 +39,16 @@ function ArrowIcon() {
 }
 
 export default async function LinksPage() {
-  const links = await listPublicLinks().catch(() => []);
+  const [links, leadMagnet] = await Promise.all([
+    listPublicLinks().catch(() => []),
+    getLeadMagnetLinkContent(),
+  ]);
+  const items = [
+    ...links.map((link) => ({ kind: "link" as const, sortOrder: link.sortOrder, link })),
+    ...(leadMagnet.visible
+      ? [{ kind: "lead-magnet" as const, sortOrder: leadMagnet.sortOrder, leadMagnet }]
+      : []),
+  ].sort((a, b) => a.sortOrder - b.sortOrder);
 
   return (
     <main className="links-page">
@@ -93,27 +103,33 @@ export default async function LinksPage() {
         </nav>
       </header>
 
-      <LeadMagnetBox />
-
-      {links.length === 0 ? (
+      {items.length === 0 ? (
         <p className="links-empty">Nessun link disponibile al momento.</p>
       ) : (
         <div id="links-container">
-          {links.map((item) => {
-            const platform = detectPlatform(item.link);
+          {items.map((item) => {
+            if (item.kind === "lead-magnet") {
+              return (
+                <div className="fade-up" key="lead-magnet">
+                  <LeadMagnetBox content={item.leadMagnet} />
+                </div>
+              );
+            }
+            const link = item.link;
+            const platform = detectPlatform(link.link);
             return (
-            <div className="fade-up" key={item.id}>
+            <div className="fade-up" key={link.id}>
               <a
                 className="card-link"
-                href={item.link}
+                href={`/api/link-click/${link.id}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <div className="image-container">
                   <div className="image-wrapper">
-                    {item.image ? (
+                    {link.image ? (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={item.image} alt={item.title} />
+                      <img src={link.image} alt={link.title} />
                     ) : (
                       <div
                         className="image-fallback"
@@ -126,13 +142,13 @@ export default async function LinksPage() {
                   </div>
                 </div>
                 <div className="content-container">
-                  <h2>{item.title}</h2>
+                  <h2>{link.title}</h2>
                   <div
                     className="description-container"
-                    dangerouslySetInnerHTML={{ __html: item.description }}
+                    dangerouslySetInnerHTML={{ __html: link.description }}
                   />
                   <div className="neo-button">
-                    <span className="cta-text">{item.cta}</span>
+                    <span className="cta-text">{link.cta}</span>
                     <ArrowIcon />
                   </div>
                 </div>

@@ -3,16 +3,16 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Sortable from "sortablejs";
-import type { Link as LinkType } from "@/lib/types";
+import type { AdminLinkItem } from "@/lib/types";
 import { detectPlatform } from "@/lib/platforms";
 import PlatformIcon from "@/components/PlatformIcon";
 
 export default function LinkAdminList({
   initialLinks,
 }: {
-  initialLinks: LinkType[];
+  initialLinks: AdminLinkItem[];
 }) {
-  const [links, setLinks] = useState<LinkType[]>(initialLinks);
+  const [links, setLinks] = useState<AdminLinkItem[]>(initialLinks);
   const [renderKey, setRenderKey] = useState(0);
   const [msg, setMsg] = useState<{ type: "ok" | "err"; text: string } | null>(
     null
@@ -34,11 +34,11 @@ export default function LinkAdminList({
       onEnd: () => {
         const ids = Array.from(
           el.querySelectorAll<HTMLElement>(".link-row")
-        ).map((row) => Number(row.dataset.id));
+        ).map((row) => String(row.dataset.id));
         const map = new Map(linksRef.current.map((l) => [l.id, l]));
         const reordered = ids
           .map((id) => map.get(id))
-          .filter((l): l is LinkType => Boolean(l));
+          .filter((l): l is AdminLinkItem => Boolean(l));
         setLinks(reordered);
         setRenderKey((k) => k + 1); // remount: React diventa unica fonte dell'ordine
         void persistOrder(ids);
@@ -52,7 +52,7 @@ export default function LinkAdminList({
     window.setTimeout(() => setMsg(null), 2600);
   }
 
-  async function persistOrder(ids: number[]) {
+  async function persistOrder(ids: string[]) {
     const res = await fetch("/api/admin/links/reorder", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -71,11 +71,12 @@ export default function LinkAdminList({
     void persistOrder(next.map((l) => l.id));
   }
 
-  async function toggle(id: number, current: boolean) {
+  async function toggle(id: string, current: boolean) {
     setLinks((ls) =>
       ls.map((l) => (l.id === id ? { ...l, visible: !current } : l))
     );
-    const res = await fetch(`/api/admin/links/${id}/visibility`, {
+    const apiId = id === "lead-magnet" ? id : id.replace(/^link:/, "");
+    const res = await fetch(`/api/admin/links/${apiId}/visibility`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ visible: !current }),
@@ -88,7 +89,11 @@ export default function LinkAdminList({
     }
   }
 
-  async function remove(id: number) {
+  async function remove(id: string) {
+    if (id === "lead-magnet") {
+      flash("err", "La guida gratuita non si elimina: puoi nasconderla.");
+      return;
+    }
     if (
       !window.confirm(
         "Eliminare definitivamente questo link? In alternativa puoi solo nasconderlo."
@@ -97,7 +102,8 @@ export default function LinkAdminList({
       return;
     const prev = links;
     setLinks((ls) => ls.filter((l) => l.id !== id));
-    const res = await fetch(`/api/admin/links/${id}`, { method: "DELETE" });
+    const apiId = id.replace(/^link:/, "");
+    const res = await fetch(`/api/admin/links/${apiId}`, { method: "DELETE" });
     if (!res.ok) {
       flash("err", "Errore nell'eliminazione");
       setLinks(prev);
@@ -173,16 +179,34 @@ export default function LinkAdminList({
                 <div
                   className="thumb thumb-fallback"
                   style={{
-                    ["--pc" as string]: detectPlatform(link.link).color,
+                    ["--pc" as string]:
+                      link.kind === "lead-magnet"
+                        ? "var(--accent)"
+                        : detectPlatform(link.link).color,
                   }}
                 >
-                  <PlatformIcon k={detectPlatform(link.link).key} size={26} />
+                  {link.kind === "lead-magnet" ? (
+                    <span style={{ fontSize: 22, fontWeight: 900 }}>↓</span>
+                  ) : (
+                    <PlatformIcon k={detectPlatform(link.link).key} size={26} />
+                  )}
                 </div>
               )}
 
               <div className="meta">
-                <h3>{link.title}</h3>
+                <h3>
+                  {link.title}
+                  {link.kind === "lead-magnet" ? (
+                    <span className="row-badge">Guida</span>
+                  ) : null}
+                </h3>
                 <p className="url">{link.link}</p>
+                <p className="row-stats">
+                  {link.clickCount} click
+                  {link.kind === "lead-magnet"
+                    ? ` · ${link.downloadCount} download`
+                    : ""}
+                </p>
               </div>
 
               <div className="actions">
@@ -193,16 +217,25 @@ export default function LinkAdminList({
                 >
                   {link.visible ? "Nascondi" : "Mostra"}
                 </button>
-                <Link href={`/admin/edit/${link.id}`} className="btn btn-ghost">
+                <Link
+                  href={
+                    link.kind === "lead-magnet"
+                      ? "/admin/edit/lead-magnet"
+                      : `/admin/edit/${link.numericId}`
+                  }
+                  className="btn btn-ghost"
+                >
                   Modifica
                 </Link>
-                <button
-                  type="button"
-                  className="btn btn-danger"
-                  onClick={() => remove(link.id)}
-                >
-                  Elimina
-                </button>
+                {link.kind === "link" ? (
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    onClick={() => remove(link.id)}
+                  >
+                    Elimina
+                  </button>
+                ) : null}
               </div>
             </div>
           ))}

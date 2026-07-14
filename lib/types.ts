@@ -16,6 +16,8 @@ export interface LinkRow {
 /** Link normalizzato per il front-end (immagine già risolta). */
 export interface Link {
   id: number;
+  adminId?: string;
+  kind?: "link";
   title: string;
   description: string;
   image: string | null;
@@ -23,4 +25,26 @@ export interface Link {
   cta: string;
   visible: boolean;
   sortOrder: number;
+  clickCount?: number;
+  downloadCount?: number;
+}
+
+export interface LinkStats {
+  clickCount: number;
+  downloadCount: number;
+}
+
+export interface AdminLinkItem {
+  id: string;
+  numericId?: number;
+  kind: "link" | "lead-magnet";
+  title: string;
+  description: string;
+  image: string | null;
+  link: string;
+  cta: string;
+  visible: boolean;
+  sortOrder: number;
+  clickCount: number;
+  downloadCount: number;
 }

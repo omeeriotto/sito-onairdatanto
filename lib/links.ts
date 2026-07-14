@@ -1,6 +1,8 @@
 import { d1Query, d1First, d1Run, d1Exec } from "./d1";
+import { getLeadMagnetAdminItem, setLeadMagnetSortOrder } from "./leadMagnetLink";
+import { getLinkStatsMap } from "./linkEvents";
 import { r2Delete } from "./r2";
-import type { Link, LinkRow } from "./types";
+import type { AdminLinkItem, Link, LinkRow } from "./types";
 
 /** Risolve l'immagine: R2 (servita da /api/media) oppure URL esterno. */
 function resolveImage(row: LinkRow): string | null {
@@ -12,6 +14,8 @@ function resolveImage(row: LinkRow): string | null {
 function toLink(row: LinkRow): Link {
   return {
     id: row.id,
+    adminId: `link:${row.id}`,
+    kind: "link",
     title: row.title,
     description: row.description,
     image: resolveImage(row),
@@ -19,6 +23,23 @@ function toLink(row: LinkRow): Link {
     cta: row.cta,
     visible: row.visible === 1,
     sortOrder: row.sort_order,
+  };
+}
+
+function toAdminLink(row: LinkRow, stats: { clickCount: number; downloadCount: number }): AdminLinkItem {
+  return {
+    id: `link:${row.id}`,
+    numericId: row.id,
+    kind: "link",
+    title: row.title,
+    description: row.description,
+    image: resolveImage(row),
+    link: row.link,
+    cta: row.cta,
+    visible: row.visible === 1,
+    sortOrder: row.sort_order,
+    clickCount: stats.clickCount,
+    downloadCount: stats.downloadCount,
   };
 }
 
@@ -36,6 +57,21 @@ export async function listAllLinks(): Promise<Link[]> {
     `SELECT * FROM links ORDER BY sort_order ASC, id ASC`
   );
   return rows.map(toLink);
+}
+
+/** Link dashboard: link normali + guida gratuita come elemento gestibile. */
+export async function listAllAdminLinks(): Promise<AdminLinkItem[]> {
+  const rows = await d1Query<LinkRow>(
+    `SELECT * FROM links ORDER BY sort_order ASC, id ASC`
+  );
+  const stats = await getLinkStatsMap("link");
+  const regular = rows.map((row) =>
+    toAdminLink(row, stats.get(String(row.id)) ?? { clickCount: 0, downloadCount: 0 })
+  );
+  const leadMagnet = await getLeadMagnetAdminItem();
+  return [...regular, leadMagnet].sort(
+    (a, b) => a.sortOrder - b.sortOrder || a.id.localeCompare(b.id)
+  );
 }
 
 export async function getLink(id: number): Promise<Link | null> {
@@ -139,4 +175,28 @@ export async function reorderLinks(ids: number[]): Promise<void> {
     )
     .join("\n");
   await d1Exec(sql);
+}
+
+/** Riordina link normali e guida gratuita nello stesso elenco admin/pubblico. */
+export async function reorderAdminLinks(ids: string[]): Promise<void> {
+  if (!ids.length) return;
+  const updates: string[] = [];
+  let leadOrder: number | null = null;
+
+  ids.forEach((rawId, index) => {
+    const order = index + 1;
+    if (rawId === "lead-magnet") {
+      leadOrder = order;
+      return;
+    }
+    const numeric = Number(rawId.replace(/^link:/, ""));
+    if (Number.isInteger(numeric)) {
+      updates.push(
+        `UPDATE links SET sort_order = ${order}, updated_at = datetime('now') WHERE id = ${numeric};`
+      );
+    }
+  });
+
+  if (updates.length) await d1Exec(updates.join("\n"));
+  if (leadOrder !== null) await setLeadMagnetSortOrder(leadOrder);
 }

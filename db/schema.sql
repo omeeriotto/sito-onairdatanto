@@ -40,3 +40,14 @@ CREATE TABLE IF NOT EXISTS site_content (
   value      TEXT NOT NULL,
   updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
+
+CREATE TABLE IF NOT EXISTS link_events (
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  item_type   TEXT    NOT NULL,
+  item_id     TEXT    NOT NULL,
+  event       TEXT    NOT NULL,
+  created_at  TEXT    NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_link_events_item
+  ON link_events (item_type, item_id, event);

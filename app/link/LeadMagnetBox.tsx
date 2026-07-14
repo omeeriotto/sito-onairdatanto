@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import type { LeadMagnetLinkContent } from "@/lib/leadMagnetLink";
 import {
   INSTAGRAM_GUIDE_IMAGE_PATH,
   INSTAGRAM_GUIDE_TITLE,
@@ -8,7 +9,24 @@ import {
 
 type SubmitState = "idle" | "loading" | "success" | "error";
 
-export default function LeadMagnetBox() {
+const fallbackContent: LeadMagnetLinkContent = {
+  title: INSTAGRAM_GUIDE_TITLE,
+  description:
+    "Una guida gratuita per migliorare bio, Reel, storie, link in bio, contenuti pinnati e ordine del profilo.",
+  modalText:
+    "Una guida rapida per guardare il tuo profilo Instagram con più lucidità: bio, Reel, storie, link in bio, contenuti pinnati e ordine generale del profilo.",
+  image: INSTAGRAM_GUIDE_IMAGE_PATH,
+  cta: "Ottieni la guida gratis",
+  eyebrow: "Guida gratuita",
+  visible: true,
+  sortOrder: 0,
+};
+
+export default function LeadMagnetBox({
+  content = fallbackContent,
+}: {
+  content?: LeadMagnetLinkContent;
+}) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -58,20 +76,23 @@ export default function LeadMagnetBox() {
         <div className="lead-card-media">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={INSTAGRAM_GUIDE_IMAGE_PATH}
+            src={content.image}
             alt="Adriano Carlucci con la guida gratuita Instagram"
           />
         </div>
         <div className="lead-card-copy">
-          <p className="lead-eyebrow">Guida gratuita</p>
-          <h2>{INSTAGRAM_GUIDE_TITLE}</h2>
+          <p className="lead-eyebrow">{content.eyebrow}</p>
+          <h2>{content.title}</h2>
         </div>
         <button
           className="lead-card-button"
           type="button"
-          onClick={() => setOpen(true)}
+          onClick={() => {
+            void fetch("/api/lead-magnet/click", { method: "POST" });
+            setOpen(true);
+          }}
         >
-          <span>Ottieni la guida gratis</span>
+          <span>{content.cta}</span>
         </button>
       </section>
 
@@ -98,12 +119,8 @@ export default function LeadMagnetBox() {
 
             <div className="lead-modal-copy">
               <p className="lead-eyebrow">Gratis via email</p>
-              <h2>{INSTAGRAM_GUIDE_TITLE}</h2>
-              <p>
-                Una guida rapida per guardare il tuo profilo Instagram con più
-                lucidità: bio, Reel, storie, link in bio, contenuti pinnati e
-                ordine generale del profilo.
-              </p>
+              <h2>{content.title}</h2>
+              <p>{content.modalText}</p>
               <form className="lead-form" onSubmit={handleSubmit}>
                 <label>
                   Il tuo nome
@@ -129,7 +146,7 @@ export default function LeadMagnetBox() {
                   />
                 </label>
                 <button type="submit" disabled={state === "loading"}>
-                  {state === "loading" ? "Invio in corso..." : "Mandami la guida"}
+                  {state === "loading" ? "Invio in corso..." : content.cta}
                 </button>
               </form>
               {message ? (

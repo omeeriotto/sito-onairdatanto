@@ -185,6 +185,9 @@
   min-width: 0;
 }
 .link-row .meta h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin: 0 0 4px;
   font-size: 16px;
   font-weight: 700;
@@ -194,6 +197,18 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.row-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(133, 247, 30, 0.12);
+  color: var(--accent);
+  font-family: "SequelSansBook", system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+}
 .link-row .meta .url {
   margin: 0;
   font-size: 13px;
@@ -201,6 +216,11 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.link-row .meta .row-stats {
+  margin: 5px 0 0;
+  color: rgba(255, 255, 255, 0.54);
+  font-size: 12px;
 }
 .link-row .actions {
   display: flex;

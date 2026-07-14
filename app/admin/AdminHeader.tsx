@@ -15,9 +15,16 @@ export default function AdminHeader() {
   return (
     <div className="admin-bar">
       <Link href="/admin" className="brand">
-        OMEGA <b>RIOT</b> · admin
+        Adriano <b>Carlucci</b> · admin
       </Link>
       <div className="bar-actions">
+        <Link
+          href="/"
+          target="_blank"
+          className="btn btn-ghost"
+        >
+          Vedi home ↗
+        </Link>
         <Link
           href="/link"
           target="_blank"

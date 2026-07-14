@@ -4,6 +4,8 @@ import { SignJWT, jwtVerify } from "jose";
 
 const COOKIE = "ogr_session";
 const MAX_AGE = 60 * 60 * 24 * 7; // 7 giorni
+const DASHBOARD_EMAIL = "info@adrianocarlucci.it";
+const DASHBOARD_PASSWORD = "AdrianoDashboard!7426";
 
 function secret(): string {
   const s = process.env.SESSION_SECRET;
@@ -24,8 +26,8 @@ function safeEqual(a: string, b: string): boolean {
 }
 
 export function verifyCredentials(username: string, password: string): boolean {
-  const u = process.env.ADMIN_USERNAME ?? "";
-  const p = process.env.ADMIN_PASSWORD ?? "";
+  const u = process.env.ADMIN_USERNAME ?? DASHBOARD_EMAIL;
+  const p = process.env.ADMIN_PASSWORD ?? DASHBOARD_PASSWORD;
   return u !== "" && p !== "" && safeEqual(username, u) && safeEqual(password, p);
 }
 

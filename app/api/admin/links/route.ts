@@ -1,5 +1,5 @@
 import { requireApiAuth } from "@/lib/auth";
-import { createLink, listAllLinks, type LinkInput } from "@/lib/links";
+import { createLink, listAllAdminLinks, type LinkInput } from "@/lib/links";
 
 export const dynamic = "force-dynamic";
 
@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const guard = await requireApiAuth();
   if (guard) return guard;
-  return Response.json(await listAllLinks());
+  return Response.json(await listAllAdminLinks());
 }
 
 // Crea un nuovo link.

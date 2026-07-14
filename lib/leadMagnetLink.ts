@@ -3,7 +3,10 @@ import {
   INSTAGRAM_GUIDE_IMAGE_PATH,
   INSTAGRAM_GUIDE_TITLE,
 } from "./leadMagnetContent";
-import { countResendGuideSends } from "./leadMagnetSubscribers";
+import {
+  countResendGuideSends,
+  getResendGuideReadStatus,
+} from "./leadMagnetSubscribers";
 import { getLinkStats } from "./linkEvents";
 import type { AdminLinkItem } from "./types";
 
@@ -94,7 +97,10 @@ export async function setLeadMagnetSortOrder(sortOrder: number): Promise<void> {
 export async function getLeadMagnetAdminItem(): Promise<AdminLinkItem> {
   const content = await getLeadMagnetLinkContent();
   const stats = await getLinkStats("lead-magnet", LEAD_MAGNET_ID);
-  const resendSends = await countResendGuideSends();
+  const [resendSends, resendStatus] = await Promise.all([
+    countResendGuideSends(),
+    getResendGuideReadStatus(),
+  ]);
   const downloads = await d1First<{ total: number }>(
     `SELECT COUNT(*) AS total FROM email_subscribers WHERE source = ?`,
     ["instagram-profile-guide"]
@@ -113,5 +119,7 @@ export async function getLeadMagnetAdminItem(): Promise<AdminLinkItem> {
     clickCount: stats.clickCount,
     downloadCount,
     sendCount: Math.max(resendSends, downloadCount),
+    statsUnavailable: !resendStatus.readable,
+    statsNote: resendStatus.error ?? undefined,
   };
 }

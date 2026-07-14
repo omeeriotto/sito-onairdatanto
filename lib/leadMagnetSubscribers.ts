@@ -61,6 +61,34 @@ function propertyString(value: unknown): string {
   return "";
 }
 
+function errorMessage(error: unknown): string {
+  if (!error) return "Errore sconosciuto";
+  if (typeof error === "string") return error;
+  if (typeof error === "object" && "message" in error) {
+    return String((error as { message?: unknown }).message ?? "Errore Resend");
+  }
+  return "Errore Resend";
+}
+
+export async function getResendGuideReadStatus(): Promise<{
+  readable: boolean;
+  error: string | null;
+}> {
+  try {
+    const resend = getResendClient();
+    const emails = await resend.emails.list({ limit: 1 });
+    if (!emails.error) return { readable: true, error: null };
+    const contacts = await resend.contacts.list({ limit: 1 });
+    if (!contacts.error) return { readable: true, error: null };
+    return {
+      readable: false,
+      error: errorMessage(contacts.error || emails.error),
+    };
+  } catch (error) {
+    return { readable: false, error: errorMessage(error) };
+  }
+}
+
 export async function listResendGuideSubscribers(): Promise<LeadMagnetSubscriber[]> {
   try {
     const resend = getResendClient();

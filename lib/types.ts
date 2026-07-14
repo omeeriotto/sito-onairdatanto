@@ -33,6 +33,8 @@ export interface LinkStats {
   clickCount: number;
   downloadCount: number;
   sendCount?: number;
+  statsUnavailable?: boolean;
+  statsNote?: string;
 }
 
 export interface AdminLinkItem {
@@ -49,4 +51,6 @@ export interface AdminLinkItem {
   clickCount: number;
   downloadCount: number;
   sendCount?: number;
+  statsUnavailable?: boolean;
+  statsNote?: string;
 }

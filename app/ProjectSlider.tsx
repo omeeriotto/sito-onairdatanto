@@ -20,6 +20,14 @@ export default function ProjectSlider({ cases }: ProjectSliderProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const activeCase = cases[activeIndex];
 
+  const showPreviousCase = () => {
+    setActiveIndex((index) => (index === 0 ? cases.length - 1 : index - 1));
+  };
+
+  const showNextCase = () => {
+    setActiveIndex((index) => (index === cases.length - 1 ? 0 : index + 1));
+  };
+
   useEffect(() => {
     if (cases.length < 2) {
       return;
@@ -67,13 +75,35 @@ export default function ProjectSlider({ cases }: ProjectSliderProps) {
         </div>
       </article>
 
-      <div className="project-dots" aria-hidden="true">
-        {cases.map((item, index) => (
-          <span
-            className={index === activeIndex ? "active" : ""}
-            key={item.title}
-          />
-        ))}
+      <div className="project-navigation" aria-label="Navigazione case study">
+        <button
+          type="button"
+          className="project-arrow"
+          onClick={showPreviousCase}
+          aria-label="Mostra il case study precedente"
+          disabled={cases.length < 2}
+        >
+          <span aria-hidden="true">←</span>
+        </button>
+
+        <div className="project-dots" aria-hidden="true">
+          {cases.map((item, index) => (
+            <span
+              className={index === activeIndex ? "active" : ""}
+              key={item.title}
+            />
+          ))}
+        </div>
+
+        <button
+          type="button"
+          className="project-arrow"
+          onClick={showNextCase}
+          aria-label="Mostra il case study successivo"
+          disabled={cases.length < 2}
+        >
+          <span aria-hidden="true">→</span>
+        </button>
       </div>
     </div>
   );

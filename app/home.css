@@ -657,11 +657,54 @@
   color: rgba(17, 21, 13, 0.56);
 }
 
+.project-navigation {
+  display: grid;
+  grid-template-columns: 42px auto 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.project-arrow {
+  width: 42px;
+  height: 42px;
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid rgba(17, 21, 13, 0.22);
+  border-radius: 999px;
+  background: rgba(241, 255, 208, 0.92);
+  color: var(--ink);
+  font: inherit;
+  font-size: 21px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.project-arrow:hover {
+  transform: translateY(-2px);
+  border-color: var(--ink);
+  background: var(--accent);
+}
+
+.project-arrow:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.project-arrow:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
 .project-dots {
   display: flex;
   justify-content: center;
   gap: 8px;
-  margin-top: 18px;
 }
 
 .project-dots span {
@@ -1437,8 +1480,16 @@
     font-size: 12px;
   }
 
-  .project-dots {
+  .project-navigation {
+    grid-template-columns: 38px auto 38px;
+    gap: 10px;
     margin-top: 12px;
+  }
+
+  .project-arrow {
+    width: 38px;
+    height: 38px;
+    font-size: 19px;
   }
 
   .method-step {

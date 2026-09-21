@@ -160,7 +160,7 @@ export const defaultHomeContent: HomeContent = {
     {
       title: "The Kollege",
       role: "Consulenza social media strategy - Marzo/Settembre 2025",
-      text: "Un percorso di consulenza costruito attorno ad autenticità, TikTok-first approach, contenuti spontanei e integrazione cross-platform. Progetto seguito con Red&Blue.",
+      text: "Un percorso di consulenza costruito assieme a Red&Blue attorno ad autenticità, TikTok-first approach, contenuti spontanei e integrazione cross-platform.",
       note: "Numeri relativi al periodo di consulenza.",
       imageSrc: "/progetti/the-kollege.jpg",
       imageAlt: "The Kollege",
@@ -198,7 +198,7 @@ export const defaultHomeContent: HomeContent = {
     {
       title: "Sissy Castrogiovanni",
       role: "Supporto consulenziale su progetto artistico",
-      text: "Supporto alla comunicazione social di un progetto con forte identità artistica e potenziale internazionale. Progetto seguito con Red&Blue.",
+      text: "Con Red&Blue ci siamo occupati di supporto alla comunicazione social di un progetto con forte identità artistica e potenziale internazionale.",
       imageSrc: "/progetti/sissy-castrogiovanni.jpg",
       imageAlt: "Sissy Castrogiovanni",
       numbers: [
@@ -210,7 +210,7 @@ export const defaultHomeContent: HomeContent = {
     {
       title: "Arezzo Wave Contest",
       role: "Docente",
-      text: "Lezione di 4 ore su Social Media Strategy e Marketing Digitale per artisti e band, con approccio pratico e casi reali. Progetto seguito con Red&Blue.",
+      text: "Per conto di Red&Blue, lezione di 4 ore su Social Media Strategy e Marketing Digitale per artisti e band, con approccio pratico e casi reali.",
       imageSrc: "/progetti/arezzo-wave.jpg",
       imageAlt: "Arezzo Wave Contest",
       numbers: [
